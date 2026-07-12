@@ -1237,3 +1237,180 @@ footer {
         gap: 40px;
     }
 }
+
+/* --- Three.js WebGL 3D Settings --- */
+#webgl-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    background: transparent;
+}
+
+/* Progressive enhancement: hide hero image when WebGL is active */
+body.webgl-active .hero-img {
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.webgl-active .hero-image-container {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    pointer-events: none;
+}
+
+body.webgl-active .glowing-border-glow {
+    display: none; /* Let Three.js lights do the glowing */
+}
+
+/* Ensure sections are stacked on top of fixed WebGL canvas */
+section {
+    position: relative;
+    z-index: 2;
+}
+
+/* Ensure navbar, cards, and forms stay clickable above WebGL */
+.navbar, .btn, select, input, textarea, a, button {
+    position: relative;
+    z-index: 10;
+}
+
+/* --- Fixed Side UI Indicators (Keychron style) --- */
+.side-indicator-left {
+    position: fixed;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    font-family: var(--font-heading);
+    pointer-events: none;
+}
+
+.slide-number {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 0.1em;
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+}
+
+.side-text {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0.5;
+}
+
+.scroll-indicator-bottom {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.mouse-icon {
+    width: 20px;
+    height: 32px;
+    border: 2px solid var(--text-muted);
+    border-radius: 20px;
+    position: relative;
+    opacity: 0.6;
+}
+
+.mouse-icon .wheel {
+    width: 4px;
+    height: 8px;
+    background-color: var(--primary);
+    border-radius: 2px;
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scroll-wheel 1.6s infinite;
+}
+
+.scroll-text {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+@keyframes scroll-wheel {
+    0% { top: 6px; opacity: 1; }
+    50% { top: 14px; opacity: 0; }
+    100% { top: 6px; opacity: 1; }
+}
+
+/* Hide indicators on mobile */
+@media (max-width: 768px) {
+    .side-indicator-left, .scroll-indicator-bottom {
+        display: none;
+    }
+}
+
+/* --- Exploded 3D Layout Adjustments --- */
+@media (min-width: 769px) {
+    /* 3D Services Slide Layout: Stacks services on the left, open 3D on the right */
+    body.webgl-active .services-section {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 60px;
+        align-items: center;
+        min-height: 100vh;
+        padding-top: 120px;
+    }
+    
+    body.webgl-active .services-grid {
+        grid-template-columns: 1fr;
+        max-height: 70vh;
+        overflow-y: auto;
+        padding-right: 20px;
+    }
+
+    body.webgl-active .services-grid::-webkit-scrollbar {
+        width: 4px;
+    }
+    body.webgl-active .services-grid::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 2px;
+    }
+
+    /* 3D Estimator Slide Layout: Left column empty for 3D model, right column for card/info */
+    body.webgl-active .estimator-container {
+        grid-template-columns: 1fr 1.1fr;
+        align-items: center;
+    }
+
+    body.webgl-active .estimator-info {
+        grid-column: 2;
+        grid-row: 1;
+        margin-bottom: 30px;
+    }
+
+    body.webgl-active .estimator-widget-card {
+        grid-column: 2;
+        grid-row: 2;
+    }
+}
