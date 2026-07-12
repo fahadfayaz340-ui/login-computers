@@ -1,0 +1,12 @@
+# Video files (avoid committing large video files)
+*.mp4
+*.mov
+*.avi
+*.mkv
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
