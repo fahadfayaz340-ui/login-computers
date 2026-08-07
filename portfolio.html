@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore showcase projects by Login Computers in Chadoora, Budgam: custom liquid-cooled PC builds, laptop motherboard repairs, and CCTV security camera setups.">
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <title>Portfolio | Login Computers Chadoora Budgam</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Floating Sticky WhatsApp Button -->
+  <a href="https://wa.me/919906405769?text=Hi%20Login%20Computers,%20I'm%20impressed%20by%20your%20portfolio!" target="_blank" class="floating-whatsapp" aria-label="Chat on WhatsApp">
+    <i data-lucide="message-square"></i>
+  </a>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <span class="logo-icon"><i data-lucide="power"></i></span>
+        <span class="logo-text">LOGIN<span class="highlight">COMPUTERS</span></span>
+      </a>
+
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="estimator.html" class="nav-link">Fix Estimator</a></li>
+        <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
+        <li><a href="about.html" class="nav-link">About Us</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li>
+          <a href="tel:9906405769" class="btn btn-primary" style="padding: 0.55rem 1.25rem;">
+            <i data-lucide="phone"></i> Call Now
+          </a>
+        </li>
+      </ul>
+
+      <div class="nav-right">
+        <div class="status-badge">
+          <span class="badge-dot"></span> Open Now
+        </div>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header Banner -->
+  <section class="hero-section" style="min-height: 45vh; padding: 7.5rem 0 3rem;">
+    <canvas id="hero-canvas"></canvas>
+    <div class="container" style="position: relative; z-index: 2; text-align: center;">
+      <div class="badge" style="margin-bottom: 1rem;">
+        <span class="badge-dot"></span> Showcase Gallery
+      </div>
+      <h1 class="hero-title" style="max-width: 850px; margin: 0 auto 1rem;">
+        Craftsmanship & <span class="text-gradient">Completed Projects</span>
+      </h1>
+      <p class="hero-subtitle" style="max-width: 640px; margin: 0 auto 1.8rem;">
+        Browse through custom gaming PC builds, precision laptop repairs, and security CCTV installations delivered for clients across Budgam.
+      </p>
+    </div>
+  </section>
+
+  <!-- Portfolio Filter & Grid Section -->
+  <section class="portfolio-section">
+    <div class="container">
+      <div class="portfolio-filter">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="custom-pc">Custom Gaming PCs</button>
+        <button class="filter-btn" data-filter="repair">Laptop Repairs</button>
+        <button class="filter-btn" data-filter="cctv">CCTV & Security</button>
+        <button class="filter-btn" data-filter="hardware">Hardware Upgrades</button>
+      </div>
+
+      <div class="portfolio-grid">
+        <!-- Item 1: Custom PC -->
+        <div class="portfolio-item" data-category="custom-pc">
+          <div class="portfolio-img-wrapper">
+            <span class="portfolio-tag">Custom PC Build</span>
+            <img src="assets/images/custom_pc_build.jpg" alt="Custom Liquid Cooled Gaming PC Build" class="portfolio-img">
+          </div>
+          <div class="portfolio-content">
+            <h3 class="portfolio-title">Liquid-Cooled RTX Gaming Rig</h3>
+            <p class="portfolio-desc">High-performance custom PC with custom teal RGB illumination, AIO liquid cooling, and ultra-clean cable routing built for 4K gaming.</p>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="badge" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;">Intel i9</span>
+              <span class="badge" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;">RTX 4080</span>
+              <span class="badge" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;">32GB DDR5</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 2: Laptop Repair -->
+        <div class="portfolio-item" data-category="repair">
+          <div class="portfolio-img-wrapper">
+            <span class="portfolio-tag">Hardware Repair</span>
+            <img src="assets/images/laptop_repair_lab.jpg" alt="Laptop Motherboard & Display Repair" class="portfolio-img">
+          </div>
+          <div class="portfolio-content">
+            <h3 class="portfolio-title">Dell XPS Hinge & Screen Overhaul</h3>
+            <p class="portfolio-desc">Repaired cracked metal hinge mounts, replaced damaged FHD display panel with genuine OEM IPS screen within 24 hours.</p>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="badge" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;">IPS Screen</span>
+              <span class="badge" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;">Hinge Rebuild</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3: CCTV -->
+        <div class="portfolio-item" data-category="cctv">
+          <div class="portfolio-img-wrapper">
+            <span class="portfolio-tag">CCTV Installation</span>
+            <img src="assets/images/cctv_security_setup.jpg" alt="Commercial CCTV Security Network" class="portfolio-img">
+          </div>
+          <div class="portfolio-content">
+            <h3 class="portfolio-title">Commercial 4K CCTV Network</h3>
+            <p class="portfolio-desc">Installed 12-camera 4K night-vision surveillance setup with remote smartphone access and NVR storage for a commercial store in Chadoora.</p>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="badge" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;">4K IP Cameras</span>
+              <span class="badge" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;">Mobile Live Feed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 4: Hardware Upgrade -->
+        <div class="portfolio-item" data-category="hardware">
+          <div class="portfolio-img-wrapper">
+            <span class="portfolio-tag">SSD & RAM Upgrade</span>
+            <img src="assets/images/ssd_hardware_upgrade.jpg" alt="NVMe M.2 SSD Upgrade" class="portfolio-img">
+          </div>
+          <div class="portfolio-content">
+            <h3 class="portfolio-title">NVMe SSD & 32GB RAM Speed Boost</h3>
+            <p class="portfolio-desc">Upgraded slow HDD to 1TB Gen4 NVMe SSD and doubled RAM capacity. Reduced boot time from 4 minutes down to 6 seconds.</p>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="badge" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;">1TB NVMe</span>
+              <span class="badge" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;">32GB RAM</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 5: Custom Workstation PC -->
+        <div class="portfolio-item" data-category="custom-pc">
+          <div class="portfolio-img-wrapper">
+            <span class="portfolio-tag">Custom PC Build</span>
+            <img src="assets/images/custom_pc_build.jpg" alt="Video Editing Workstation Build" class="portfolio-img">
+          </div>
+          <div class="portfolio-content">
+            <h3 class="portfolio-title">4K Video Editing Workstation</h3>
+            <p class="portfolio-desc">Built for local content creators & video editors in Budgam, featuring dual NVMe scratch disks, silent fans, and 64GB DDR5 memory.</p>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="badge" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;">64GB DDR5</span>
+              <span class="badge" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;">Dual SSD</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 6: CCTV & Network -->
+        <div class="portfolio-item" data-category="cctv">
+          <div class="portfolio-img-wrapper">
+            <span class="portfolio-tag">Wi-Fi & Networking</span>
+            <img src="assets/images/cctv_security_setup.jpg" alt="Office Mesh Wi-Fi Installation" class="portfolio-img">
+          </div>
+          <div class="portfolio-content">
+            <h3 class="portfolio-title">Office Gigabit Router & Cabling</h3>
+            <p class="portfolio-desc">Structured CAT6 Ethernet network cabling and dual-band Wi-Fi 6 mesh router setup for seamless indoor wireless coverage.</p>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="badge" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;">CAT6 Cabling</span>
+              <span class="badge" style="font-size: 0.72rem; padding: 0.2rem 0.6rem;">Wi-Fi 6</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Box -->
+  <section class="newsletter-section">
+    <div class="container">
+      <div class="newsletter-box">
+        <div class="newsletter-content">
+          <h3>Want a Custom PC or Repair Solution?</h3>
+          <p>Get in touch with our lead technician to discuss your component build or diagnostic check.</p>
+        </div>
+        <a href="estimator.html" class="btn btn-primary">
+          <i data-lucide="calculator"></i> Estimate Repair Cost
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <span class="logo-icon"><i data-lucide="power"></i></span>
+            <span class="logo-text">LOGIN<span class="highlight">COMPUTERS</span></span>
+          </a>
+          <p class="footer-desc">
+            Top-tier computer sales and professional troubleshooting service in Budgam. Keeping your digital life active.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Quick Links</h4>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="estimator.html">Fix Estimator</a>
+            <a href="portfolio.html">Portfolio</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Services</h4>
+          <div class="footer-links">
+            <a href="services.html">Laptop & PC Repair</a>
+            <a href="services.html">SSD & RAM Upgrades</a>
+            <a href="services.html">Custom PC Building</a>
+            <a href="services.html">Virus & OS Cleanup</a>
+            <a href="services.html">CCTV & Networking</a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Opening Hours</h4>
+          <div class="hours-list">
+            <div class="hours-row">
+              <span>Monday - Saturday</span>
+              <strong>09:00 AM - 07:00 PM</strong>
+            </div>
+            <div class="hours-row">
+              <span>Sunday</span>
+              <strong style="color: #ef4444;">Closed</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Login Computers. All rights reserved. Designed for Login Computers Chadoora.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>
