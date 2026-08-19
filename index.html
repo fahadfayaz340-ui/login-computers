@@ -17,6 +17,67 @@
 
   <!-- Main CSS -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- JSON-LD Local Business & Service Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ComputerRepairService",
+    "name": "Login Computers",
+    "image": "https://login-computers.vercel.app/assets/images/hero.jpg",
+    "telephone": "+919906405769",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Main Market",
+      "addressLocality": "Chadoora",
+      "addressRegion": "Budgam, Jammu & Kashmir",
+      "postalCode": "191113",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 33.9482,
+      "longitude": 74.8021
+    },
+    "url": "https://login-computers.vercel.app/",
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Saturday", "Sunday"],
+        "opens": "09:00",
+        "closes": "19:00"
+      }
+    ],
+    "priceRange": "₹₹",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Computer Repair & IT Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Laptop & Desktop Repair"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Custom Gaming PC Building"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "CCTV & Wi-Fi Networking Setup"
+          }
+        }
+      ]
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -37,6 +98,7 @@
         <li><a href="index.html" class="nav-link active">Home</a></li>
         <li><a href="services.html" class="nav-link">Services</a></li>
         <li><a href="estimator.html" class="nav-link">Fix Estimator</a></li>
+        <li><a href="#track-repair" class="nav-link">Track Repair</a></li>
         <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
         <li><a href="about.html" class="nav-link">About Us</a></li>
         <li><a href="contact.html" class="nav-link">Contact</a></li>
@@ -312,6 +374,31 @@
             <i data-lucide="message-square"></i> Book This Service via WhatsApp
           </a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Repair Status Tracker Section -->
+  <section class="tracker-section" id="track-repair">
+    <div class="container">
+      <div class="tracker-box">
+        <div class="section-header" style="margin-bottom: 1.5rem;">
+          <span class="section-tag"><i data-lucide="search"></i> Real-Time Service Tracking</span>
+          <h2 class="section-title">Track Your Repair Status</h2>
+          <p class="section-desc">Got a device in repair at Login Computers? Enter your ticket number below (try demo tickets <strong>LC-9012</strong>, <strong>LC-8841</strong>, or <strong>LC-7719</strong>) to check live diagnostic progress.</p>
+        </div>
+
+        <form id="tracker-form" class="tracker-search-form">
+          <div class="tracker-input-wrapper">
+            <i data-lucide="ticket"></i>
+            <input type="text" id="tracker-input" class="tracker-input" placeholder="Enter Repair Ticket ID (e.g. LC-9012)" required>
+          </div>
+          <button type="submit" class="btn btn-primary" style="padding: 0.9rem 1.75rem; white-space: nowrap;">
+            <i data-lucide="search"></i> Check Status
+          </button>
+        </form>
+
+        <div id="tracker-result"></div>
       </div>
     </div>
   </section>

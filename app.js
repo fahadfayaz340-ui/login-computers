@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initNewsletterForm();
   initPortfolioFilter();
+  initRepairTracker();
   lucide.createIcons();
 });
 
@@ -348,3 +349,135 @@ function showToast(message, type = 'info') {
     setTimeout(() => toast.remove(), 300);
   }, 3500);
 }
+
+/* --------------------------------------------------
+   10. Interactive Live Repair Status Tracker
+-------------------------------------------------- */
+function initRepairTracker() {
+  const form = document.getElementById('tracker-form');
+  const input = document.getElementById('tracker-input');
+  const resultContainer = document.getElementById('tracker-result');
+
+  if (!form || !input || !resultContainer) return;
+
+  const mockDb = {
+    'LC-9012': {
+      ticket: 'LC-9012',
+      device: 'Dell XPS 15 Laptop',
+      issue: 'NVMe SSD Upgrade & Thermal Paste Repaste',
+      step: 3, // 1 to 4
+      technician: 'Sameer Ahmad',
+      eta: 'Today, 5:30 PM',
+      notes: 'Hardware assembly finished. Running stress-testing benchmarks.'
+    },
+    'LC-8841': {
+      ticket: 'LC-8841',
+      device: 'Custom Gaming Rig (RTX 4070)',
+      issue: 'BIOS Update & Cable Management',
+      step: 4,
+      technician: 'Owais Khan',
+      eta: 'Ready for Pickup',
+      notes: 'Tested 100% stable. Ready for pickup at Chadoora hub.'
+    },
+    'LC-7719': {
+      ticket: 'LC-7719',
+      device: 'HP Pavilion 14',
+      issue: 'FHD Display Replacement',
+      step: 2,
+      technician: 'Farooq Ahmad',
+      eta: 'Tomorrow, 2:00 PM',
+      notes: 'Genuine HP IPS panel received. Diagnostic check passed.'
+    }
+  };
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const rawVal = input.value.trim().toUpperCase();
+    if (!rawVal) {
+      showToast('Please enter your repair ticket ID', 'error');
+      return;
+    }
+
+    const ticketId = rawVal.startsWith('LC-') ? rawVal : `LC-${rawVal}`;
+    let record = mockDb[ticketId];
+
+    if (!record) {
+      // Dynamic fallback for any ticket ID
+      record = {
+        ticket: ticketId,
+        device: 'Registered Laptop / Device',
+        issue: 'System Repair & Hardware Maintenance',
+        step: 2,
+        technician: 'Duty Engineer',
+        eta: 'Within 24 Hours',
+        notes: 'Device logged into system. Technicians performing initial diagnostics.'
+      };
+    }
+
+    renderTrackerResult(record, resultContainer);
+    showToast(`Loaded tracking status for ${record.ticket}`, 'success');
+  });
+}
+
+function renderTrackerResult(record, container) {
+  const steps = [
+    { title: 'Received', icon: 'package-check' },
+    { title: 'Diagnostics', icon: 'stethoscope' },
+    { title: 'Repair & Test', icon: 'wrench' },
+    { title: 'Ready Pickup', icon: 'check-circle-2' }
+  ];
+
+  const stepperHtml = steps.map((s, idx) => {
+    const stepNum = idx + 1;
+    let stateClass = '';
+    if (stepNum < record.step) stateClass = 'completed';
+    else if (stepNum === record.step) stateClass = 'active';
+
+    return `
+      <div class="stepper-step ${stateClass}">
+        <div class="stepper-icon">
+          <i data-lucide="${s.icon}"></i>
+        </div>
+        <div class="stepper-title">${s.title}</div>
+      </div>
+    `;
+  }).join('');
+
+  const waMsg = encodeURIComponent(`Hi Login Computers! Checking live status for my Repair Ticket ID: ${record.ticket} (${record.device}).`);
+
+  container.innerHTML = `
+    <div class="tracker-result-card">
+      <div class="tracker-ticket-header">
+        <div>
+          <span class="ticket-number-badge">${record.ticket}</span>
+          <div class="ticket-device-type">${record.device} — ${record.issue}</div>
+        </div>
+        <a href="https://wa.me/919906405769?text=${waMsg}" target="_blank" class="btn btn-whatsapp" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+          <i data-lucide="message-square"></i> WhatsApp Status Query
+        </a>
+      </div>
+
+      <div class="tracker-stepper">
+        ${stepperHtml}
+      </div>
+
+      <div class="tracker-meta-grid">
+        <div class="tracker-meta-item">
+          <span>Assigned Technician</span>
+          <strong>${record.technician}</strong>
+        </div>
+        <div class="tracker-meta-item">
+          <span>Estimated Completion</span>
+          <strong>${record.eta}</strong>
+        </div>
+        <div class="tracker-meta-item" style="grid-column: span 2;">
+          <span>Latest Technician Note</span>
+          <strong>${record.notes}</strong>
+        </div>
+      </div>
+    </div>
+  `;
+
+  lucide.createIcons();
+}
+

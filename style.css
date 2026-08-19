@@ -1404,3 +1404,270 @@ button, input, select, textarea {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   LIVE REPAIR TRACKER & ENHANCED COMPONENTS (UI/UX Pro Max)
+   ========================================================================== */
+
+.tracker-section {
+  padding: 5rem 0;
+  background: linear-gradient(180deg, var(--light-bg) 0%, var(--primary-subtle) 100%);
+  border-top: 1px solid var(--border-teal);
+  border-bottom: 1px solid var(--border-teal);
+}
+
+.tracker-box {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-teal);
+}
+
+.tracker-search-form {
+  display: flex;
+  gap: 1rem;
+  max-width: 640px;
+  margin: 1.5rem auto 2rem auto;
+}
+
+.tracker-input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.tracker-input-wrapper i {
+  position: absolute;
+  left: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary);
+  pointer-events: none;
+}
+
+.tracker-input {
+  width: 100%;
+  padding: 0.9rem 1rem 0.9rem 3.2rem;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-light);
+  background: var(--light-bg);
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.tracker-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-glow);
+  background: #ffffff;
+}
+
+.tracker-result-card {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: var(--primary-subtle);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-teal);
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.tracker-ticket-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px dashed var(--border-teal);
+  margin-bottom: 1.75rem;
+}
+
+.ticket-number-badge {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.ticket-device-type {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.tracker-stepper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.stepper-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.stepper-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid var(--border-light);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  transition: all var(--transition-fast);
+}
+
+.stepper-step.completed .stepper-icon {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+}
+
+.stepper-step.active .stepper-icon {
+  background: var(--accent-gold);
+  border-color: var(--accent-gold);
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.4);
+  animation: pulse 2s infinite;
+}
+
+.stepper-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.stepper-step.completed .stepper-title,
+.stepper-step.active .stepper-title {
+  color: var(--dark);
+}
+
+.tracker-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  background: #ffffff;
+  padding: 1.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-light);
+}
+
+.tracker-meta-item {
+  font-size: 0.9rem;
+}
+
+.tracker-meta-item span {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.tracker-meta-item strong {
+  color: var(--dark);
+}
+
+/* PC Presets Grid */
+.preset-section-header {
+  margin: 3rem 0 1.5rem 0;
+}
+
+.presets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.preset-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-md);
+  padding: 1.75rem;
+  border: 2px solid var(--border-light);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.preset-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.preset-card.active {
+  border-color: var(--primary);
+  background: var(--primary-subtle);
+  box-shadow: var(--shadow-lg);
+}
+
+.preset-badge-tag {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  background: var(--primary);
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.preset-price {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary-dark);
+  margin: 0.5rem 0 1rem 0;
+}
+
+.preset-specs-list {
+  list-style: none;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.preset-specs-list li {
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 640px) {
+  .tracker-search-form {
+    flex-direction: column;
+  }
+  .tracker-stepper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
