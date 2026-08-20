@@ -3,640 +3,667 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Login Computers - Your trusted tech hub in Chadoora, Budgam. Expert laptop & desktop repair, custom gaming PC builds, security CCTV systems, and accessories. Call 9906405769.">
-  <link rel="icon" type="image/png" href="assets/images/favicon.png">
-  <title>Login Computers | Trusted Tech Hub & Repair in Chadoora, Budgam</title>
+  <meta name="description" content="AGY | Creative Digital Agency — We Build Digital Realities. Immersive 3D WebGL experiences, high-performance web applications, and next-gen brand systems.">
+  <title>AGY | Creative Digital Agency — We Build Digital Realities</title>
   
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Main CSS -->
+  <!-- Three.js Library -->
+  <script src="three.min.js"></script>
+
+  <!-- Main Stylesheet -->
   <link rel="stylesheet" href="style.css">
-
-  <!-- JSON-LD Local Business & Service Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ComputerRepairService",
-    "name": "Login Computers",
-    "image": "https://login-computers.vercel.app/assets/images/hero.jpg",
-    "telephone": "+919906405769",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Main Market",
-      "addressLocality": "Chadoora",
-      "addressRegion": "Budgam, Jammu & Kashmir",
-      "postalCode": "191113",
-      "addressCountry": "IN"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 33.9482,
-      "longitude": 74.8021
-    },
-    "url": "https://login-computers.vercel.app/",
-    "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Saturday", "Sunday"],
-        "opens": "09:00",
-        "closes": "19:00"
-      }
-    ],
-    "priceRange": "₹₹",
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Computer Repair & IT Services",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Laptop & Desktop Repair"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Custom Gaming PC Building"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "CCTV & Wi-Fi Networking Setup"
-          }
-        }
-      ]
-    }
-  }
-  </script>
 </head>
-<body>
+<body class="dark-theme">
 
-  <!-- Floating Sticky WhatsApp Button -->
-  <a href="https://wa.me/919906405769?text=Hi%20Login%20Computers,%20I%20have%20an%20inquiry%20about..." target="_blank" class="floating-whatsapp" aria-label="Chat on WhatsApp">
-    <i data-lucide="message-square"></i>
-  </a>
+  <!-- WebGL Background Particle Canvas -->
+  <div id="bg-canvas-container">
+    <canvas id="bg-canvas"></canvas>
+  </div>
 
   <!-- Navigation Bar -->
-  <nav class="navbar" id="navbar">
+  <header class="navbar" id="navbar">
     <div class="nav-container">
-      <a href="index.html" class="logo">
-        <span class="logo-icon"><i data-lucide="power"></i></span>
-        <span class="logo-text">LOGIN<span class="highlight">COMPUTERS</span></span>
+      <a href="#hero" class="logo">
+        <span class="logo-badge">AGY</span>
+        <span class="logo-status"></span>
       </a>
 
-      <ul class="nav-menu" id="nav-menu">
-        <li><a href="index.html" class="nav-link active">Home</a></li>
-        <li><a href="services.html" class="nav-link">Services</a></li>
-        <li><a href="estimator.html" class="nav-link">Fix Estimator</a></li>
-        <li><a href="#track-repair" class="nav-link">Track Repair</a></li>
-        <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
-        <li><a href="about.html" class="nav-link">About Us</a></li>
-        <li><a href="contact.html" class="nav-link">Contact</a></li>
-        <li>
-          <a href="tel:9906405769" class="btn btn-primary" style="padding: 0.55rem 1.25rem;">
-            <i data-lucide="phone"></i> Call Now
-          </a>
-        </li>
-      </ul>
+      <nav class="nav-menu" id="nav-menu">
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#estimator" class="nav-link">Estimator</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
 
-      <div class="nav-right">
-        <div class="status-badge" id="shop-status">
-          <span class="badge-dot"></span> Open Now
-        </div>
-        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
-          <span></span>
-          <span></span>
-          <span></span>
+      <div class="nav-actions">
+        <a href="#estimator" class="btn btn-nav-cta">
+          <span>Start a Project</span>
+          <i data-lucide="arrow-up-right"></i>
+        </a>
+        <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Navigation">
+          <i data-lucide="menu"></i>
         </button>
       </div>
     </div>
-  </nav>
+  </header>
 
   <!-- Hero Section -->
-  <section class="hero-section">
-    <canvas id="hero-canvas"></canvas>
-    <div class="container hero-container">
-      <div class="hero-content">
-        <div class="badge">
-          <span class="badge-dot"></span> Official Login Computers
-        </div>
-        <h1 class="hero-title">
-          Your Trusted Tech Hub in <span class="text-gradient">Chadoora, Budgam</span>
-        </h1>
-        <p class="hero-subtitle">
-          Expert laptop & desktop repair, custom gaming PC builds, security systems, and high-quality accessories. Quick service, fair pricing.
-        </p>
-        <div class="hero-ctas">
-          <a href="estimator.html" class="btn btn-primary">
-            Estimate Repair Price <i data-lucide="calculator"></i>
-          </a>
-          <a href="https://wa.me/919906405769?text=Hi%20Login%20Computers,%20I%20need%20tech%20support!" target="_blank" class="btn btn-whatsapp">
-            <i data-lucide="message-square"></i> WhatsApp Us
-          </a>
-        </div>
+  <section class="hero-section" id="hero">
+    <!-- 3D Interactive Object Canvas -->
+    <div class="hero-3d-wrapper">
+      <canvas id="hero-3d-canvas"></canvas>
+    </div>
 
-        <div class="hero-stats">
-          <div class="stat-item">
-            <span class="stat-number" data-target="100" data-suffix="%">100%</span>
-            <span class="stat-label">Local Trust</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-number">Quick</span>
-            <span class="stat-label">Turnaround</span>
-          </div>
-          <div class="stat-divider"></div>
-          <div class="stat-item">
-            <span class="stat-number">9906405769</span>
-            <span class="stat-label">Direct Hotline</span>
-          </div>
-        </div>
+    <!-- Centered Overlay Content -->
+    <div class="hero-content">
+      <div class="tag-badge">
+        <span class="pulse-dot"></span>
+        <span>AGY CREATIVE DIGITAL AGENCY</span>
       </div>
 
-      <div class="hero-image-wrapper">
-        <div class="hero-image-card">
-          <img src="assets/images/hero.jpg" alt="Login Computers Tech Workspace in Chadoora" class="hero-img">
-          <div class="hero-badge-floating">
-            <div class="hero-badge-icon">
-              <i data-lucide="shield-check"></i>
+      <h1 class="hero-headline">
+        We Build <br><span class="text-gradient">Digital Realities</span>
+      </h1>
+
+      <p class="hero-subheadline">
+        Pioneering next-generation web applications, interactive 3D WebGL experiences, and futuristic brand identities for world-class visionary brands.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="#estimator" class="btn btn-primary btn-glow">
+          <span>Launch Project</span>
+          <i data-lucide="zap"></i>
+        </a>
+        <a href="#projects" class="btn btn-secondary">
+          <span>Explore Showcases</span>
+          <i data-lucide="sparkles"></i>
+        </a>
+      </div>
+
+      <!-- Live Performance Metrics -->
+      <div class="hero-metrics">
+        <div class="metric-item">
+          <span class="metric-val">60 FPS</span>
+          <span class="metric-label">WebGL Rendering</span>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-item">
+          <span class="metric-val">100+</span>
+          <span class="metric-label">3D Realities Built</span>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-item">
+          <span class="metric-val">99.8%</span>
+          <span class="metric-label">Client Satisfaction</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-indicator">
+      <a href="#services" aria-label="Scroll to Services">
+        <span class="mouse-icon">
+          <span class="wheel"></span>
+        </span>
+        <span class="scroll-text">SCROLL TO EXPLORE</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Services Grid Section -->
+  <section class="services-section section-padding" id="services">
+    <div class="container">
+      <div class="section-header text-center">
+        <div class="section-tag">[ OUR EXPERTISE ]</div>
+        <h2 class="section-title">Engineering Next-Gen <span class="text-gradient-blue">Digital Products</span></h2>
+        <p class="section-subtitle">We bridge spatial design, advanced web engineering, and creative technology to build web experiences that leave a lasting mark.</p>
+      </div>
+
+      <!-- 3D Card Border Grid -->
+      <div class="services-grid">
+        <!-- Card 1 -->
+        <div class="service-card 3d-tilt-card" data-glow-color="rgba(0, 240, 255, 0.2)">
+          <div class="card-border-glow"></div>
+          <div class="card-inner">
+            <div class="card-icon-box">
+              <i data-lucide="box"></i>
             </div>
-            <div class="hero-badge-text">
-              <h4>100% Genuine Spare Parts</h4>
-              <p>Transparent upfront quotes before repairs</p>
+            <h3 class="card-title">3D & WebGL Experiences</h3>
+            <p class="card-desc">Custom GLSL shaders, Three.js web engines, interactive product configurators, and real-time spatial web environments.</p>
+            <ul class="card-tags">
+              <li>Three.js</li>
+              <li>GLSL Shaders</li>
+              <li>WebGPU</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="service-card 3d-tilt-card" data-glow-color="rgba(168, 85, 247, 0.2)">
+          <div class="card-border-glow"></div>
+          <div class="card-inner">
+            <div class="card-icon-box">
+              <i data-lucide="layers"></i>
             </div>
+            <h3 class="card-title">Immersive Web Applications</h3>
+            <p class="card-desc">High-performance single page architectures with fluid 60fps micro-interactions, seamless transitions, and zero layout shift.</p>
+            <ul class="card-tags">
+              <li>React / Next.js</li>
+              <li>GSAP</li>
+              <li>TypeScript</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="service-card 3d-tilt-card" data-glow-color="rgba(0, 240, 255, 0.2)">
+          <div class="card-border-glow"></div>
+          <div class="card-inner">
+            <div class="card-icon-box">
+              <i data-lucide="sparkles"></i>
+            </div>
+            <h3 class="card-title">Kinetic Brand Systems</h3>
+            <p class="card-desc">Future-proof brand identities, 3D kinetic logos, typography systems, and dynamic design token libraries for digital ecosystems.</p>
+            <ul class="card-tags">
+              <li>3D Identity</li>
+              <li>Design Tokens</li>
+              <li>Motion Guidelines</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="service-card 3d-tilt-card" data-glow-color="rgba(168, 85, 247, 0.2)">
+          <div class="card-border-glow"></div>
+          <div class="card-inner">
+            <div class="card-icon-box">
+              <i data-lucide="layout"></i>
+            </div>
+            <h3 class="card-title">Interactive UI/UX Design</h3>
+            <p class="card-desc">Spatial interface design, human-centered usability, micro-interaction choreography, and design systems for web and mobile.</p>
+            <ul class="card-tags">
+              <li>Figma 3D</li>
+              <li>Spatial UI</li>
+              <li>Micro-Interactions</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="service-card 3d-tilt-card" data-glow-color="rgba(0, 240, 255, 0.2)">
+          <div class="card-border-glow"></div>
+          <div class="card-inner">
+            <div class="card-icon-box">
+              <i data-lucide="cpu"></i>
+            </div>
+            <h3 class="card-title">AI & Creative Technology</h3>
+            <p class="card-desc">Integrating generative AI workflows, intelligent interactive canvases, dynamic content engines, and custom LLM interfaces.</p>
+            <ul class="card-tags">
+              <li>Generative AI</li>
+              <li>Canvas API</li>
+              <li>Smart Agents</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="service-card 3d-tilt-card" data-glow-color="rgba(168, 85, 247, 0.2)">
+          <div class="card-border-glow"></div>
+          <div class="card-inner">
+            <div class="card-icon-box">
+              <i data-lucide="globe"></i>
+            </div>
+            <h3 class="card-title">Digital Product Strategy</h3>
+            <p class="card-desc">End-to-end technical architecture, performance tuning, accessibility compliance, and high-scale edge cloud deployments.</p>
+            <ul class="card-tags">
+              <li>Edge Cloud</li>
+              <li>Performance Audit</li>
+              <li>SEO & Analytics</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Services Bento Grid Section -->
-  <section class="services-section" id="services">
+  <!-- Project Timeline / Showcase Section -->
+  <section class="timeline-section section-padding" id="projects">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">What We Do</span>
-        <h2 class="section-title">Professional IT & Hardware Services</h2>
-        <p class="section-desc">We offer a wide range of computing solutions for homes, businesses, and gaming enthusiasts in Budgam.</p>
-      </div>
-
-      <div class="bento-grid">
-        <!-- Service 1: Laptop & PC Repair -->
-        <div class="bento-card col-4">
-          <div class="card-icon-wrapper">
-            <i data-lucide="laptop"></i>
-          </div>
-          <h3 class="card-title">Laptop & PC Repair</h3>
-          <p class="card-desc">Slow laptop? Broken screen? Keyboard issues? We diagnose and fix hardware faults with genuine spare parts.</p>
-          <div class="card-features">
-            <div class="card-feature-item"><i data-lucide="check-circle"></i> Screen replacements</div>
-            <div class="card-feature-item"><i data-lucide="check-circle"></i> Hinges & body repair</div>
-            <div class="card-feature-item"><i data-lucide="check-circle"></i> Battery & keyboard swap</div>
-          </div>
+      <div class="timeline-header">
+        <div>
+          <div class="section-tag">[ FEATURED WORK ]</div>
+          <h2 class="section-title">Selected Projects & <span class="text-gradient">Timeline</span></h2>
         </div>
-
-        <!-- Service 2: Hardware Upgrades -->
-        <div class="bento-card col-4">
-          <div class="card-icon-wrapper">
-            <i data-lucide="cpu"></i>
-          </div>
-          <h3 class="card-title">Hardware Upgrades</h3>
-          <p class="card-desc">Speed up your old computer dramatically with our SSD upgrades and RAM expansions. Feel the speed boost instantly.</p>
-          <div class="card-features">
-            <div class="card-feature-item"><i data-lucide="check-circle"></i> High-speed SATA/NVMe SSDs</div>
-            <div class="card-feature-item"><i data-lucide="check-circle"></i> DDR4/DDR5 RAM Upgrades</div>
-            <div class="card-feature-item"><i data-lucide="check-circle"></i> Processor & cooling setup</div>
-          </div>
-        </div>
-
-        <!-- Service 3: Custom PC Building -->
-        <div class="bento-card col-4 highlight">
-          <div class="card-icon-wrapper" style="background: rgba(255,255,255,0.15); color: #ffffff;">
-            <i data-lucide="monitor"></i>
-          </div>
-          <span class="service-badge-tag" style="background: rgba(255,255,255,0.2); color: #ffffff;">Popular Choice</span>
-          <h3 class="card-title">Custom PC Building</h3>
-          <p class="card-desc">Get a tailored PC built for gaming, editing, or office work. Tell us your budget, we select optimal components.</p>
-          <div class="card-features">
-            <div class="card-feature-item" style="color: #cbd5e1;"><i data-lucide="check-circle" style="color: #34d399;"></i> Budget-friendly options</div>
-            <div class="card-feature-item" style="color: #cbd5e1;"><i data-lucide="check-circle" style="color: #34d399;"></i> Clean cable management</div>
-            <div class="card-feature-item" style="color: #cbd5e1;"><i data-lucide="check-circle" style="color: #34d399;"></i> Warranty & testing included</div>
-          </div>
-        </div>
-
-        <!-- Service 4: Software & Virus Removal -->
-        <div class="bento-card col-4">
-          <div class="card-icon-wrapper">
-            <i data-lucide="shield-alert"></i>
-          </div>
-          <h3 class="card-title">Software & Virus Removal</h3>
-          <p class="card-desc">OS installations (Windows 10/11, Linux), driver updates, antivirus setup, virus cleanup, and general tuning.</p>
-          <div class="card-features">
-            <div class="card-feature-item"><i data-lucide="check-circle"></i> Clean OS installs</div>
-            <div class="card-feature-item"><i data-lucide="check-circle"></i> Driver/utility configuration</div>
-            <div class="card-feature-item"><i data-lucide="check-circle"></i> Malware/spyware removal</div>
-          </div>
-        </div>
-
-        <!-- Service 5: Data Backup & Recovery -->
-        <div class="bento-card col-4">
-          <div class="card-icon-wrapper">
-            <i data-lucide="hard-drive"></i>
-          </div>
-          <h3 class="card-title">Data Backup & Recovery</h3>
-          <p class="card-desc">Accidentally formatted a drive or lost photos? We assist in recovering data from corrupt drives and setting up backups.</p>
-          <div class="card-features">
-            <div class="card-feature-item"><i data-lucide="check-circle"></i> Deleted file recovery</div>
-            <div class="card-feature-item"><i data-lucide="check-circle"></i> Hard drive diagnostics</div>
-            <div class="card-feature-item"><i data-lucide="check-circle"></i> Cloud/external backup setup</div>
-          </div>
-        </div>
-
-        <!-- Service 6: CCTV & Networking -->
-        <div class="bento-card col-4">
-          <div class="card-icon-wrapper">
-            <i data-lucide="camera"></i>
-          </div>
-          <h3 class="card-title">CCTV & Networking</h3>
-          <p class="card-desc">Protect your shop, home, or office with premium CCTV camera setup. We handle Wi-Fi router setup and office networking.</p>
-          <div class="card-features">
-            <div class="card-feature-item"><i data-lucide="check-circle"></i> Smart CCTV setups</div>
-            <div class="card-feature-item"><i data-lucide="check-circle"></i> Router & Wi-Fi configuration</div>
-            <div class="card-feature-item"><i data-lucide="check-circle"></i> Office networking cabling</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Interactive Fix Estimator Preview Section -->
-  <section class="estimator-section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Interactive Tool</span>
-        <h2 class="section-title">Instant Repair & Upgrade Estimator</h2>
-        <p class="section-desc">Select your device type and what you need done to get an instant estimate of starting prices. Connect with us directly to book your slot.</p>
-      </div>
-
-      <div class="estimator-grid">
-        <div class="estimator-form">
-          <div>
-            <div class="form-group-label">
-              <span class="step-num">1</span> Select Device Type
-            </div>
-            <div class="option-cards-grid">
-              <div class="option-card selected" data-estimator-device="Laptop / Notebook">
-                <i data-lucide="laptop" class="option-icon"></i>
-                <span class="option-title">Laptop / Notebook</span>
-              </div>
-              <div class="option-card" data-estimator-device="Desktop PC">
-                <i data-lucide="monitor" class="option-icon"></i>
-                <span class="option-title">Desktop PC</span>
-              </div>
-              <div class="option-card" data-estimator-device="Custom Gaming Rig">
-                <i data-lucide="gamepad-2" class="option-icon"></i>
-                <span class="option-title">Gaming Rig</span>
-              </div>
-              <div class="option-card" data-estimator-device="CCTV Setup">
-                <i data-lucide="camera" class="option-icon"></i>
-                <span class="option-title">CCTV System</span>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div class="form-group-label">
-              <span class="step-num">2</span> What do you need done?
-            </div>
-            <div class="option-cards-grid">
-              <div class="option-card selected" data-estimator-service="SSD Upgrade (Super Fast Boot)" data-service-name="SSD Upgrade (Super Fast Boot)" data-service-price="2500">
-                <i data-lucide="zap" class="option-icon"></i>
-                <span class="option-title">SSD Upgrade</span>
-              </div>
-              <div class="option-card" data-estimator-service="Screen Replacement" data-service-name="Screen Replacement" data-service-price="3800">
-                <i data-lucide="smartphone" class="option-icon"></i>
-                <span class="option-title">Screen Replacement</span>
-              </div>
-              <div class="option-card" data-estimator-service="RAM Expansion" data-service-name="RAM Expansion" data-service-price="1800">
-                <i data-lucide="cpu" class="option-icon"></i>
-                <span class="option-title">RAM Expansion</span>
-              </div>
-              <div class="option-card" data-estimator-service="Virus & OS Clean" data-service-name="Virus Removal & OS Install" data-service-price="800">
-                <i data-lucide="shield-check" class="option-icon"></i>
-                <span class="option-title">OS & Virus Cleanup</span>
-              </div>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
-            <div class="badge" style="background: #ffffff;"><i data-lucide="clock" style="color: var(--primary);"></i> Repairs within 24h</div>
-            <div class="badge" style="background: #ffffff;"><i data-lucide="dollar-sign" style="color: var(--primary);"></i> No Hidden Charges</div>
-          </div>
-        </div>
-
-        <div class="estimator-result-card">
-          <div class="result-header">
-            <h3>Starting Estimate</h3>
-            <p>Calculated in real-time for your selection</p>
-          </div>
-
-          <div class="price-display-box">
-            <div class="price-label">Estimated Price</div>
-            <div class="price-amount" id="estimate-price-val">₹2,500*</div>
-            <div class="price-note">*Component costs included. Final price depends on specific brand & specifications.</div>
-          </div>
-
-          <div class="breakdown-list">
-            <div class="breakdown-row">
-              <span>Device:</span>
-              <strong id="summary-device">Laptop / Notebook</strong>
-            </div>
-            <div class="breakdown-row">
-              <span>Service:</span>
-              <strong id="summary-service">SSD Upgrade</strong>
-            </div>
-            <div class="breakdown-row">
-              <span>Diagnostics:</span>
-              <strong style="color: #34d399;">Included (FREE)</strong>
-            </div>
-          </div>
-
-          <a href="#" id="estimator-whatsapp-btn" target="_blank" class="btn btn-whatsapp" style="width: 100%;">
-            <i data-lucide="message-square"></i> Book This Service via WhatsApp
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Live Repair Status Tracker Section -->
-  <section class="tracker-section" id="track-repair">
-    <div class="container">
-      <div class="tracker-box">
-        <div class="section-header" style="margin-bottom: 1.5rem;">
-          <span class="section-tag"><i data-lucide="search"></i> Real-Time Service Tracking</span>
-          <h2 class="section-title">Track Your Repair Status</h2>
-          <p class="section-desc">Got a device in repair at Login Computers? Enter your ticket number below (try demo tickets <strong>LC-9012</strong>, <strong>LC-8841</strong>, or <strong>LC-7719</strong>) to check live diagnostic progress.</p>
-        </div>
-
-        <form id="tracker-form" class="tracker-search-form">
-          <div class="tracker-input-wrapper">
-            <i data-lucide="ticket"></i>
-            <input type="text" id="tracker-input" class="tracker-input" placeholder="Enter Repair Ticket ID (e.g. LC-9012)" required>
-          </div>
-          <button type="submit" class="btn btn-primary" style="padding: 0.9rem 1.75rem; white-space: nowrap;">
-            <i data-lucide="search"></i> Check Status
+        <div class="timeline-controls">
+          <button class="timeline-btn prev-btn" id="timeline-prev" aria-label="Previous Project">
+            <i data-lucide="chevron-left"></i>
           </button>
-        </form>
+          <button class="timeline-btn next-btn" id="timeline-next" aria-label="Next Project">
+            <i data-lucide="chevron-right"></i>
+          </button>
+        </div>
+      </div>
 
-        <div id="tracker-result"></div>
+      <!-- Horizontal Scrollable Track -->
+      <div class="timeline-track-wrapper">
+        <div class="timeline-track" id="timeline-track">
+          
+          <!-- Item 1 -->
+          <div class="timeline-item" data-project="nebula">
+            <div class="timeline-node">
+              <span class="year-badge">2025</span>
+              <span class="node-dot"></span>
+            </div>
+            <div class="project-card">
+              <div class="project-image-box">
+                <div class="project-overlay"></div>
+                <div class="project-tech-badge">3D & WebGL Engine</div>
+                <div class="project-mockup-graphic nebula-graphic">
+                  <div class="graphic-cube"></div>
+                </div>
+              </div>
+              <div class="project-info">
+                <h3 class="project-title">NEBULA-X</h3>
+                <p class="project-subtitle">Next-Gen WebGL Spatial Configurator</p>
+                <p class="project-desc">A real-time 3D web experience enabling users to configure complex architectural hardware in photorealistic space.</p>
+                <div class="project-metrics">
+                  <div class="pm-item">
+                    <span class="pm-val">+490%</span>
+                    <span class="pm-lbl">Conversion Surge</span>
+                  </div>
+                  <div class="pm-item">
+                    <span class="pm-val">60 FPS</span>
+                    <span class="pm-lbl">Mobile WebGL</span>
+                  </div>
+                </div>
+                <button class="btn-project-detail" data-modal="nebula">
+                  <span>View Case Study</span>
+                  <i data-lucide="arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="timeline-item" data-project="quantum">
+            <div class="timeline-node">
+              <span class="year-badge">2025</span>
+              <span class="node-dot"></span>
+            </div>
+            <div class="project-card">
+              <div class="project-image-box">
+                <div class="project-overlay"></div>
+                <div class="project-tech-badge">React + Three.js</div>
+                <div class="project-mockup-graphic quantum-graphic">
+                  <div class="graphic-sphere"></div>
+                </div>
+              </div>
+              <div class="project-info">
+                <h3 class="project-title">QUANTUM PROTOCOL</h3>
+                <p class="project-subtitle">FinTech Data Visualization Platform</p>
+                <p class="project-desc">High-frequency trading interface featuring 3D volumetric data streams and real-time market sentiment analysis.</p>
+                <div class="project-metrics">
+                  <div class="pm-item">
+                    <span class="pm-val">&lt; 15ms</span>
+                    <span class="pm-lbl">Render Latency</span>
+                  </div>
+                  <div class="pm-item">
+                    <span class="pm-val">$2.4B</span>
+                    <span class="pm-lbl">Tracked Volume</span>
+                  </div>
+                </div>
+                <button class="btn-project-detail" data-modal="quantum">
+                  <span>View Case Study</span>
+                  <i data-lucide="arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="timeline-item" data-project="synthesis">
+            <div class="timeline-node">
+              <span class="year-badge">2024</span>
+              <span class="node-dot"></span>
+            </div>
+            <div class="project-card">
+              <div class="project-image-box">
+                <div class="project-overlay"></div>
+                <div class="project-tech-badge">AI + Canvas API</div>
+                <div class="project-mockup-graphic synthesis-graphic">
+                  <div class="graphic-torus"></div>
+                </div>
+              </div>
+              <div class="project-info">
+                <h3 class="project-title">SYNTHESIS AI</h3>
+                <p class="project-subtitle">Generative Design Engine Studio</p>
+                <p class="project-desc">An interactive design workspace powered by AI models, transforming natural language prompts into responsive UI systems.</p>
+                <div class="project-metrics">
+                  <div class="pm-item">
+                    <span class="pm-val">120K+</span>
+                    <span class="pm-lbl">UI Components</span>
+                  </div>
+                  <div class="pm-item">
+                    <span class="pm-val">4.9/5</span>
+                    <span class="pm-lbl">User Rating</span>
+                  </div>
+                </div>
+                <button class="btn-project-detail" data-modal="synthesis">
+                  <span>View Case Study</span>
+                  <i data-lucide="arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="timeline-item" data-project="vortex">
+            <div class="timeline-node">
+              <span class="year-badge">2024</span>
+              <span class="node-dot"></span>
+            </div>
+            <div class="project-card">
+              <div class="project-image-box">
+                <div class="project-overlay"></div>
+                <div class="project-tech-badge">WebGL Shaders</div>
+                <div class="project-mockup-graphic vortex-graphic">
+                  <div class="graphic-ring"></div>
+                </div>
+              </div>
+              <div class="project-info">
+                <h3 class="project-title">VORTEX HYPERCAR</h3>
+                <p class="project-subtitle">Photorealistic 3D Vehicle Customizer</p>
+                <p class="project-desc">An ultra-crisp WebGL showroom allowing luxury supercar buyers to customize carbon trims, metallic paints, and cockpit interiors.</p>
+                <div class="project-metrics">
+                  <div class="pm-item">
+                    <span class="pm-val">4K HDR</span>
+                    <span class="pm-lbl">Material Fidelity</span>
+                  </div>
+                  <div class="pm-item">
+                    <span class="pm-val">12 Min</span>
+                    <span class="pm-lbl">Avg Session</span>
+                  </div>
+                </div>
+                <button class="btn-project-detail" data-modal="vortex">
+                  <span>View Case Study</span>
+                  <i data-lucide="arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- About Us Section -->
-  <section class="about-section" id="about">
+  <!-- Interactive Project Cost Estimator Calculator Widget -->
+  <section class="estimator-section section-padding" id="estimator">
     <div class="container">
-      <div class="about-grid">
-        <div>
-          <span class="section-tag">Who We Are</span>
-          <h2 class="section-title">Login Computers Chadoora</h2>
-          <p class="section-desc" style="margin-bottom: 1.5rem;">
-            Located in the heart of Chadoora, Budgam, Login Computers has been a trusted technical partner for the local community. We pride ourselves on transparent diagnostics, expert craftsmanship, and reliable after-sales support.
-          </p>
-          <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 2rem;">
-            Whether you need a simple software fix, standard hardware repairs, or a massive high-end custom liquid-cooled gaming PC built from scratch, our technicians have the skills and tools to deliver excellent service.
-          </p>
+      <div class="section-header text-center">
+        <div class="section-tag">[ COST CALCULATOR ]</div>
+        <h2 class="section-title">Interactive Project <span class="text-gradient-blue">Estimator</span></h2>
+        <p class="section-subtitle">Select your requirements below to instantly calculate your custom project investment and delivery timeframe.</p>
+      </div>
 
-          <div class="about-features-list">
-            <div class="about-feature-card">
-              <i data-lucide="check-circle-2" class="about-feature-icon"></i>
-              <div>
-                <h4 class="about-feature-title">Genuine Spare Parts</h4>
-                <p class="about-feature-desc">100% authentic components</p>
-              </div>
-            </div>
-            <div class="about-feature-card">
-              <i data-lucide="zap" class="about-feature-icon"></i>
-              <div>
-                <h4 class="about-feature-title">Quick Turnaround</h4>
-                <p class="about-feature-desc">Most fixes within 24 hours</p>
-              </div>
-            </div>
-            <div class="about-feature-card">
-              <i data-lucide="users" class="about-feature-icon"></i>
-              <div>
-                <h4 class="about-feature-title">Friendly Local Support</h4>
-                <p class="about-feature-desc">Always here to help you</p>
-              </div>
-            </div>
-            <div class="about-feature-card">
-              <i data-lucide="tag" class="about-feature-icon"></i>
-              <div>
-                <h4 class="about-feature-title">100% Upfront Pricing</h4>
-                <p class="about-feature-desc">No unexpected hidden fees</p>
-              </div>
+      <div class="estimator-wrapper">
+        <!-- Controls Column -->
+        <div class="estimator-controls">
+          
+          <!-- Step 1: Project Type -->
+          <div class="estimator-step">
+            <label class="step-label">1. Select Project Scope</label>
+            <div class="option-grid">
+              <button class="est-opt-btn active" data-group="type" data-value="3d-web" data-price="6000" data-weeks="4">
+                <i data-lucide="box"></i>
+                <span>3D Web Experience</span>
+              </button>
+              <button class="est-opt-btn" data-group="type" data-value="webapp" data-price="4500" data-weeks="3">
+                <i data-lucide="layers"></i>
+                <span>Immersive Web App</span>
+              </button>
+              <button class="est-opt-btn" data-group="type" data-value="brand" data-price="3500" data-weeks="2">
+                <i data-lucide="sparkles"></i>
+                <span>Kinetic Brand System</span>
+              </button>
+              <button class="est-opt-btn" data-group="type" data-value="full-ecosystem" data-price="12000" data-weeks="8">
+                <i data-lucide="globe"></i>
+                <span>Full Digital Ecosystem</span>
+              </button>
             </div>
           </div>
+
+          <!-- Step 2: 3D & Interactive Complexity -->
+          <div class="estimator-step">
+            <div class="step-label-row">
+              <label class="step-label">2. 3D & Shaders Complexity</label>
+              <span class="range-val-badge" id="complexity-badge">Advanced 3D (WebGL)</span>
+            </div>
+            <input type="range" class="est-range-slider" id="complexity-range" min="1" max="4" value="3">
+            <div class="range-labels">
+              <span>Standard 2D</span>
+              <span>Subtle Micro-UI</span>
+              <span>Advanced 3D</span>
+              <span>Custom GLSL Shader Engine</span>
+            </div>
+          </div>
+
+          <!-- Step 3: Additional Modules -->
+          <div class="estimator-step">
+            <label class="step-label">3. Select Optional Feature Modules</label>
+            <div class="checkbox-grid">
+              <label class="est-check-card">
+                <input type="checkbox" class="est-checkbox" value="ai" data-price="2500" data-weeks="1">
+                <span class="checkbox-custom"></span>
+                <span class="check-text">AI Integration & Smart Agents (+$2,500)</span>
+              </label>
+
+              <label class="est-check-card">
+                <input type="checkbox" class="est-checkbox" value="cms" data-price="1800" data-weeks="1">
+                <span class="checkbox-custom"></span>
+                <span class="check-text">Headless CMS & Dynamic Admin (+$1,800)</span>
+              </label>
+
+              <label class="est-check-card">
+                <input type="checkbox" class="est-checkbox" value="ecommerce" data-price="3000" data-weeks="2">
+                <span class="checkbox-custom"></span>
+                <span class="check-text">3D E-Commerce Checkout (+$3,000)</span>
+              </label>
+
+              <label class="est-check-card">
+                <input type="checkbox" class="est-checkbox" value="seo" data-price="1200" data-weeks="1" checked>
+                <span class="checkbox-custom"></span>
+                <span class="check-text">SEO, Performance & Analytics (+$1,200)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Step 4: Delivery Pace -->
+          <div class="estimator-step">
+            <label class="step-label">4. Timeline Urgency</label>
+            <div class="option-grid option-grid-3">
+              <button class="est-opt-btn" data-group="pace" data-value="rush" data-multiplier="1.3">
+                <i data-lucide="zap"></i>
+                <span>Express Rush (2-3 Wks)</span>
+              </button>
+              <button class="est-opt-btn active" data-group="pace" data-value="standard" data-multiplier="1.0">
+                <i data-lucide="clock"></i>
+                <span>Standard Delivery</span>
+              </button>
+              <button class="est-opt-btn" data-group="pace" data-value="relaxed" data-multiplier="0.95">
+                <i data-lucide="calendar"></i>
+                <span>Flexible Timeline</span>
+              </button>
+            </div>
+          </div>
+
         </div>
 
-        <div>
-          <div class="hero-image-card">
-            <img src="assets/images/laptop_repair_lab.jpg" alt="Login Computers Diagnostics Bench in Chadoora" class="hero-img">
+        <!-- Output Dynamic Card -->
+        <div class="estimator-summary-card">
+          <div class="summary-header">
+            <span class="summary-badge">ESTIMATED INVESTMENT</span>
+            <div class="price-display">
+              <span class="currency">$</span>
+              <span class="price-amount" id="total-price">11,200</span>
+              <span class="price-suffix">USD</span>
+            </div>
+            <p class="summary-subtext">Includes source code, 3D assets, deployment & 30-day support.</p>
           </div>
+
+          <div class="summary-breakdown">
+            <div class="sb-title">Estimated Scope Included:</div>
+            <ul class="sb-list" id="summary-breakdown-list">
+              <li><i data-lucide="check"></i> <span>3D Web Experience Core</span></li>
+              <li><i data-lucide="check"></i> <span>Advanced 3D WebGL Shaders</span></li>
+              <li><i data-lucide="check"></i> <span>SEO & Analytics Engine</span></li>
+            </ul>
+          </div>
+
+          <div class="summary-timeline">
+            <div class="st-item">
+              <i data-lucide="clock"></i>
+              <span>Estimated Delivery: <strong id="est-timeline-val">4 - 5 Weeks</strong></span>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-glow btn-full" id="btn-request-proposal">
+            <span>Book Discovery Call</span>
+            <i data-lucide="send"></i>
+          </button>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Location & Contact Teaser Section -->
-  <section class="contact-section" id="contact">
+  <!-- Clean Minimalist Contact Footer -->
+  <section class="contact-section section-padding" id="contact">
     <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Get in Touch</span>
-        <h2 class="section-title">Visit Us or Call Today</h2>
-        <p class="section-desc">Have a question? Want to check inventory or repair status? Call us directly, send a WhatsApp message, or drop your query below.</p>
-      </div>
-
       <div class="contact-grid">
-        <div class="contact-info-cards">
-          <div class="info-card">
-            <div class="info-icon">
-              <i data-lucide="phone-call"></i>
-            </div>
-            <div class="info-details">
-              <h4>Call Directly</h4>
-              <p>+91 9906405769</p>
-              <span style="font-size: 0.78rem; color: var(--primary);">Available 9:00 AM - 7:00 PM</span>
-            </div>
+        
+        <!-- Left Contact Info -->
+        <div class="contact-info">
+          <div class="section-tag">[ GET IN TOUCH ]</div>
+          <h2 class="section-title">Ready to Build Your <span class="text-gradient">Reality?</span></h2>
+          <p class="contact-desc">Whether you need an immersive 3D web experience, a custom web app, or a kinetic brand system, our studio is ready.</p>
+
+          <div class="status-indicator-card">
+            <span class="status-pulse"></span>
+            <span>AVAILABLE FOR Q3 / Q4 PROJECTS</span>
           </div>
 
-          <div class="info-card">
-            <div class="info-icon" style="background: #25d366;">
-              <i data-lucide="message-square"></i>
+          <div class="contact-details-list">
+            <div class="cd-item">
+              <i data-lucide="mail"></i>
+              <div>
+                <span class="cd-label">Direct Email</span>
+                <a href="mailto:hello@agy.studio" class="cd-val">hello@agy.studio</a>
+              </div>
             </div>
-            <div class="info-details">
-              <h4>WhatsApp Chat</h4>
-              <p>+91 9906405769</p>
-              <span style="font-size: 0.78rem; color: var(--text-muted);">Message anytime for quick support</span>
-            </div>
-          </div>
 
-          <div class="info-card">
-            <div class="info-icon">
+            <div class="cd-item">
               <i data-lucide="map-pin"></i>
+              <div>
+                <span class="cd-label">Studio Headquarter</span>
+                <span class="cd-val">San Francisco, CA & Global Remote</span>
+              </div>
             </div>
-            <div class="info-details">
-              <h4>Shop Address</h4>
-              <p>Chadoora, Budgam, Jammu & Kashmir, 191113</p>
-              <span style="font-size: 0.78rem; color: var(--primary);">Located near Main Market</span>
+
+            <div class="cd-item">
+              <i data-lucide="message-square"></i>
+              <div>
+                <span class="cd-label">Instant Inquiry</span>
+                <a href="https://wa.me/919906405769?text=Hi%20AGY%20Studio,%20I'd%20like%20to%20discuss%20a%20new%203D%20web%20project..." target="_blank" class="cd-val text-blue">Chat via WhatsApp</a>
+              </div>
             </div>
           </div>
 
-          <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13233.15220468988!2d74.7963!3d33.9554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38e18ef4f5e00000%3A0x0!2sChadoora%2C%20Budgam!5e0!3m2!1sen!2sin!4v1700000000000" allowfullscreen="" loading="lazy"></iframe>
+          <div class="social-links-row">
+            <a href="https://github.com" target="_blank" aria-label="GitHub"><i data-lucide="github"></i></a>
+            <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+            <a href="https://dribbble.com" target="_blank" aria-label="Dribbble"><i data-lucide="dribbble"></i></a>
+            <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
           </div>
         </div>
 
+        <!-- Right Quick Contact Form -->
         <div class="contact-form-card">
-          <h3 style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; margin-bottom: 1.25rem;">
-            Send a Quick Query
-          </h3>
-          <form id="contact-form">
-            <div class="form-row">
-              <div class="form-field">
-                <label class="form-label" for="contact-name">Full Name *</label>
-                <input type="text" id="contact-name" class="form-input" placeholder="e.g. John Doe" required>
-              </div>
-              <div class="form-field">
-                <label class="form-label" for="contact-phone">Phone Number *</label>
-                <input type="tel" id="contact-phone" class="form-input" placeholder="9906405769" required>
-              </div>
+          <form id="contact-form" onsubmit="event.preventDefault(); handleFormSubmit();">
+            <div class="form-group">
+              <label for="form-name">Your Name</label>
+              <input type="text" id="form-name" placeholder="Alex Morgan" required>
             </div>
 
-            <div class="form-field">
-              <label class="form-label" for="contact-service">Query Type</label>
-              <select id="contact-service" class="form-select">
-                <option value="Laptop/PC Repair">Laptop/PC Repair</option>
-                <option value="Custom PC Build">Custom PC Build</option>
-                <option value="SSD & RAM Upgrade">SSD & RAM Upgrade</option>
-                <option value="CCTV Installation">CCTV & Networking</option>
-                <option value="Data Recovery">Data Recovery</option>
-                <option value="Parts & Accessories">Parts & Accessories</option>
+            <div class="form-group">
+              <label for="form-email">Work Email</label>
+              <input type="email" id="form-email" placeholder="alex@company.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="form-service">Project Type</label>
+              <select id="form-service" required>
+                <option value="3d-web">3D & WebGL Experience</option>
+                <option value="webapp">Immersive Web Application</option>
+                <option value="brand">Kinetic Brand System</option>
+                <option value="other">Other / Custom Scope</option>
               </select>
             </div>
 
-            <div class="form-field">
-              <label class="form-label" for="contact-message">Message Details *</label>
-              <textarea id="contact-message" class="form-textarea" placeholder="Explain your requirements or what issue you are facing..." required></textarea>
+            <div class="form-group">
+              <label for="form-message">Project Brief / Ideas</label>
+              <textarea id="form-message" rows="4" placeholder="Tell us about your project vision, target timeline, and goals..." required></textarea>
             </div>
 
-            <button type="submit" class="btn btn-whatsapp" style="width: 100%;">
-              <i data-lucide="send"></i> Send Message via WhatsApp
+            <button type="submit" class="btn btn-primary btn-glow btn-full" id="btn-form-submit">
+              <span>Send Message</span>
+              <i data-lucide="arrow-right"></i>
             </button>
+            <div class="form-status-msg" id="form-status"></div>
           </form>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Newsletter Section -->
-  <section class="newsletter-section">
-    <div class="container">
-      <div class="newsletter-box">
-        <div class="newsletter-content">
-          <h3>Stay Updated on Tech Offers</h3>
-          <p>Subscribe to get updates on new PC hardware stock, gaming builds, and maintenance tips.</p>
-        </div>
-        <form class="newsletter-form" id="newsletter-form">
-          <input type="email" class="newsletter-input" placeholder="Enter your email address..." required>
-          <button type="submit" class="btn btn-primary">Subscribe</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
+  <!-- Minimalist Footer Bar -->
   <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="index.html" class="logo">
-            <span class="logo-icon"><i data-lucide="power"></i></span>
-            <span class="logo-text">LOGIN<span class="highlight">COMPUTERS</span></span>
-          </a>
-          <p class="footer-desc">
-            Top-tier computer sales and professional troubleshooting service in Budgam. Keeping your digital life active.
-          </p>
-          <div class="social-links">
-            <a href="#" class="social-icon" aria-label="Facebook"><i data-lucide="facebook"></i></a>
-            <a href="#" class="social-icon" aria-label="Instagram"><i data-lucide="instagram"></i></a>
-            <a href="https://wa.me/919906405769" class="social-icon" aria-label="WhatsApp"><i data-lucide="message-square"></i></a>
-            <a href="tel:9906405769" class="social-icon" aria-label="Phone"><i data-lucide="phone"></i></a>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="footer-title">Quick Links</h4>
-          <div class="footer-links">
-            <a href="index.html">Home</a>
-            <a href="services.html">Services</a>
-            <a href="estimator.html">Fix Estimator</a>
-            <a href="portfolio.html">Portfolio</a>
-            <a href="about.html">About Us</a>
-            <a href="contact.html">Contact</a>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="footer-title">Services</h4>
-          <div class="footer-links">
-            <a href="services.html">Laptop & PC Repair</a>
-            <a href="services.html">SSD & RAM Upgrades</a>
-            <a href="services.html">Custom PC Building</a>
-            <a href="services.html">Virus & OS Cleanup</a>
-            <a href="services.html">CCTV & Networking</a>
-          </div>
-        </div>
-
-        <div>
-          <h4 class="footer-title">Opening Hours</h4>
-          <div class="hours-list">
-            <div class="hours-row">
-              <span>Monday - Saturday</span>
-              <strong>09:00 AM - 07:00 PM</strong>
-            </div>
-            <div class="hours-row">
-              <span>Sunday</span>
-              <strong style="color: #ef4444;">Closed</strong>
-            </div>
-            <p style="font-size: 0.8rem; margin-top: 0.5rem; color: #64748b;">
-              Emergency WhatsApp support available 24/7.
-            </p>
-          </div>
-        </div>
+    <div class="container footer-container">
+      <div class="footer-left">
+        <span class="footer-logo">AGY</span>
+        <span class="footer-copy">© 2026 AGY Digital Studio. All rights reserved.</span>
       </div>
 
-      <div class="footer-bottom">
-        <p>&copy; 2026 Login Computers. All rights reserved. Designed for Login Computers Chadoora.</p>
-        <p style="font-size: 0.82rem; color: #64748b;">Chadoora, Budgam, J&K 191113</p>
+      <div class="footer-right">
+        <a href="#hero" class="btn-back-to-top" aria-label="Back to Top">
+          <span>Back to top</span>
+          <i data-lucide="arrow-up"></i>
+        </a>
       </div>
     </div>
   </footer>
 
-  <!-- Scripts -->
-  <script src="three.min.js"></script>
-  <script src="three-3d.js"></script>
+  <!-- Modal for Case Study Details / Proposal Confirmation -->
+  <div class="modal-backdrop" id="modal-backdrop">
+    <div class="modal-card" id="modal-card">
+      <button class="modal-close" id="modal-close" aria-label="Close Modal"><i data-lucide="x"></i></button>
+      <div class="modal-content" id="modal-content">
+        <!-- Dynamic content filled via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript File -->
   <script src="app.js"></script>
-  <script src="estimator.js"></script>
 </body>
 </html>

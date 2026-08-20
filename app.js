@@ -1,26 +1,250 @@
 /* ==========================================================================
-   LOGIN COMPUTERS - Main JavaScript Logic & Micro-Interactions
+   AGY — Creative Digital Agency Interactive Engine & 3D WebGL
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  initNavbar();
-  initCanvasHero();
-  initStatsCounter();
-  initShopStatus();
-  initFAQAccordion();
-  initContactForm();
-  initNewsletterForm();
-  initPortfolioFilter();
-  initRepairTracker();
-  lucide.createIcons();
-});
+  // Initialize Lucide Icons
+  if (window.lucide) {
+    lucide.createIcons();
+  }
 
-/* --------------------------------------------------
-   1. Navbar & Mobile Menu Handler
--------------------------------------------------- */
-function initNavbar() {
+  // Global State
+  const state = {
+    mouseX: 0,
+    mouseY: 0,
+    targetMouseX: 0,
+    targetMouseY: 0,
+    scrollY: window.scrollY
+  };
+
+  // Track global cursor position
+  window.addEventListener('mousemove', (e) => {
+    state.targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
+    state.targetMouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+  });
+
+  window.addEventListener('scroll', () => {
+    state.scrollY = window.scrollY;
+  });
+
+  /* ------------------------------------------------------------------------
+     1. WebGL Background Particle Engine (Three.js)
+     ------------------------------------------------------------------------ */
+  function initBackgroundCanvas() {
+    const canvas = document.getElementById('bg-canvas');
+    if (!canvas || !window.THREE) return;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 100;
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      alpha: true,
+      antialias: true
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // Create Particle Constellation
+    const particleCount = 180;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+
+    const colorBlue = new THREE.Color(0x00f0ff);
+    const colorViolet = new THREE.Color(0xa855f7);
+
+    for (let i = 0; i < particleCount; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 250;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 250;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 200;
+
+      const mixedColor = Math.random() > 0.5 ? colorBlue : colorViolet;
+      colors[i * 3] = mixedColor.r;
+      colors[i * 3 + 1] = mixedColor.g;
+      colors[i * 3 + 2] = mixedColor.b;
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const material = new THREE.PointsMaterial({
+      size: 2.2,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.65,
+      blending: THREE.AdditiveBlending
+    });
+
+    const particleSystem = new THREE.Points(geometry, material);
+    scene.add(particleSystem);
+
+    // Animation Loop
+    let clock = new THREE.Clock();
+
+    function animateBg() {
+      requestAnimationFrame(animateBg);
+
+      const elapsedTime = clock.getElapsedTime();
+
+      // Smooth subtle particle rotation
+      particleSystem.rotation.y = elapsedTime * 0.02 + state.mouseX * 0.1;
+      particleSystem.rotation.x = elapsedTime * 0.01 + state.mouseY * 0.1;
+
+      // Smooth mouse interpolation
+      state.mouseX += (state.targetMouseX - state.mouseX) * 0.05;
+      state.mouseY += (state.targetMouseY - state.mouseY) * 0.05;
+
+      renderer.render(scene, camera);
+    }
+    animateBg();
+
+    // Resize Handler
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     2. Hero Section Interactive 3D Abstract Object (Three.js)
+     ------------------------------------------------------------------------ */
+  function initHero3DObject() {
+    const canvas = document.getElementById('hero-3d-canvas');
+    if (!canvas || !window.THREE) return;
+
+    const heroWrapper = canvas.parentElement;
+    let width = heroWrapper.offsetWidth || window.innerWidth;
+    let height = heroWrapper.offsetHeight || window.innerHeight;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+    camera.position.z = 7.5;
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      alpha: true,
+      antialias: true
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(width, height);
+
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+    scene.add(ambientLight);
+
+    const blueLight = new THREE.PointLight(0x00f0ff, 4, 20);
+    blueLight.position.set(4, 4, 5);
+    scene.add(blueLight);
+
+    const violetLight = new THREE.PointLight(0xa855f7, 4, 20);
+    violetLight.position.set(-4, -4, 3);
+    scene.add(violetLight);
+
+    // Group for Masterpiece Geometric Object
+    const heroGroup = new THREE.Group();
+
+    // 1. Outer Wireframe Icosahedron
+    const outerGeo = new THREE.IcosahedronGeometry(2.4, 2);
+    const outerMat = new THREE.MeshStandardMaterial({
+      color: 0x181820,
+      wireframe: true,
+      roughness: 0.1,
+      metalness: 0.9,
+      emissive: 0x00f0ff,
+      emissiveIntensity: 0.2
+    });
+    const outerMesh = new THREE.Mesh(outerGeo, outerMat);
+    heroGroup.add(outerMesh);
+
+    // 2. Inner Glowing Core Sphere
+    const innerGeo = new THREE.IcosahedronGeometry(1.2, 3);
+    const innerMat = new THREE.MeshStandardMaterial({
+      color: 0x00f0ff,
+      emissive: 0xa855f7,
+      emissiveIntensity: 0.8,
+      roughness: 0.2,
+      metalness: 0.8
+    });
+    const innerMesh = new THREE.Mesh(innerGeo, innerMat);
+    heroGroup.add(innerMesh);
+
+    // 3. Orbiting Geometric Ring Nodes
+    const ringGroup = new THREE.Group();
+    const nodeCount = 8;
+    const ringGeo = new THREE.SphereGeometry(0.12, 16, 16);
+    const nodeMat = new THREE.MeshStandardMaterial({
+      color: 0x00f0ff,
+      emissive: 0x00f0ff,
+      emissiveIntensity: 1.0
+    });
+
+    for (let i = 0; i < nodeCount; i++) {
+      const angle = (i / nodeCount) * Math.PI * 2;
+      const nodeMesh = new THREE.Mesh(ringGeo, nodeMat);
+      nodeMesh.position.x = Math.cos(angle) * 3.2;
+      nodeMesh.position.y = Math.sin(angle) * 3.2;
+      ringGroup.add(nodeMesh);
+    }
+    ringGroup.rotation.x = Math.PI / 3;
+    heroGroup.add(ringGroup);
+
+    scene.add(heroGroup);
+
+    // Animation Loop
+    let clock = new THREE.Clock();
+
+    function animateHero() {
+      requestAnimationFrame(animateHero);
+
+      const time = clock.getElapsedTime();
+
+      // Continuous organic rotation & floating float animation
+      outerMesh.rotation.x = time * 0.15;
+      outerMesh.rotation.y = time * 0.2;
+
+      innerMesh.rotation.x = -time * 0.25;
+      innerMesh.rotation.y = -time * 0.3;
+
+      ringGroup.rotation.z = time * 0.3;
+
+      // Levitation sine wave
+      heroGroup.position.y = Math.sin(time * 1.2) * 0.15;
+
+      // Mouse Parallax smooth lerp
+      heroGroup.rotation.y += (state.mouseX * 0.8 - heroGroup.rotation.y) * 0.05;
+      heroGroup.rotation.x += (-state.mouseY * 0.6 - heroGroup.rotation.x) * 0.05;
+
+      // Scroll dynamics
+      const scrollFactor = state.scrollY * 0.001;
+      heroGroup.rotation.z = scrollFactor * 1.2;
+      heroGroup.position.z = -scrollFactor * 2;
+
+      renderer.render(scene, camera);
+    }
+    animateHero();
+
+    // Resize Handler
+    window.addEventListener('resize', () => {
+      width = heroWrapper.offsetWidth || window.innerWidth;
+      height = heroWrapper.offsetHeight || window.innerHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    });
+  }
+
+  // Execute WebGL canvas renders
+  initBackgroundCanvas();
+  initHero3DObject();
+
+  /* ------------------------------------------------------------------------
+     3. Navbar Scroll & Mobile Drawer Behavior
+     ------------------------------------------------------------------------ */
   const navbar = document.getElementById('navbar');
-  const navToggle = document.getElementById('nav-toggle');
+  const mobileToggle = document.getElementById('mobile-toggle');
   const navMenu = document.getElementById('nav-menu');
 
   window.addEventListener('scroll', () => {
@@ -31,453 +255,369 @@ function initNavbar() {
     }
   });
 
-  if (navToggle && navMenu) {
-    navToggle.addEventListener('click', () => {
-      navMenu.classList.toggle('active');
-      navToggle.classList.toggle('active');
+  if (mobileToggle && navMenu) {
+    mobileToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('mobile-open');
     });
 
     document.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        navToggle.classList.remove('active');
+        navMenu.classList.remove('mobile-open');
       });
     });
   }
-}
 
-/* --------------------------------------------------
-   2. Interactive Canvas Hero Particle Network
--------------------------------------------------- */
-function initCanvasHero() {
-  const canvas = document.getElementById('hero-canvas');
-  if (!canvas) return;
+  /* ------------------------------------------------------------------------
+     4. Services Grid 3D Card Tilt & Mouse Glow Effect
+     ------------------------------------------------------------------------ */
+  const tiltCards = document.querySelectorAll('.3d-tilt-card');
 
-  const ctx = canvas.getContext('2d');
-  let width, height;
-  let particles = [];
-  let mouse = { x: null, y: null, radius: 140 };
+  tiltCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
 
-  function resize() {
-    width = canvas.width = canvas.parentElement.offsetWidth;
-    height = canvas.height = canvas.parentElement.offsetHeight;
-  }
+      // Set CSS variables for radial mouse border glow
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
 
-  window.addEventListener('resize', resize);
-  resize();
+      // Calculate 3D tilt
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -10;
+      const rotateY = ((x - centerX) / centerX) * 10;
 
-  window.addEventListener('mousemove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  });
-
-  window.addEventListener('mouseleave', () => {
-    mouse.x = null;
-    mouse.y = null;
-  });
-
-  class Particle {
-    constructor() {
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
-      this.size = Math.random() * 2.5 + 1;
-      this.speedX = (Math.random() - 0.5) * 1.2;
-      this.speedY = (Math.random() - 0.5) * 1.2;
-      this.color = '#2a7d6e';
-    }
-
-    update() {
-      this.x += this.speedX;
-      this.y += this.speedY;
-
-      if (this.x < 0 || this.x > width) this.speedX *= -1;
-      if (this.y < 0 || this.y > height) this.speedY *= -1;
-
-      // Mouse attraction effect
-      if (mouse.x && mouse.y) {
-        let dx = mouse.x - this.x;
-        let dy = mouse.y - this.y;
-        let distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < mouse.radius) {
-          let force = (mouse.radius - distance) / mouse.radius;
-          this.x -= (dx / distance) * force * 2;
-          this.y -= (dy / distance) * force * 2;
-        }
-      }
-    }
-
-    draw() {
-      ctx.fillStyle = this.color;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
-
-  // Generate particles based on canvas area
-  const count = Math.floor((width * height) / 18000);
-  for (let i = 0; i < Math.min(count, 50); i++) {
-    particles.push(new Particle());
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, width, height);
-
-    // Draw connecting lines
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        let dx = particles[i].x - particles[j].x;
-        let dy = particles[i].y - particles[j].y;
-        let dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < 130) {
-          ctx.strokeStyle = `rgba(42, 125, 110, ${1 - dist / 130})`;
-          ctx.lineWidth = 0.8;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.stroke();
-        }
-      }
-    }
-
-    particles.forEach(p => {
-      p.update();
-      p.draw();
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
     });
 
-    requestAnimationFrame(animate);
-  }
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+    });
+  });
 
-  animate();
-}
+  /* ------------------------------------------------------------------------
+     5. Scroll-Triggered Staggered Animations
+     ------------------------------------------------------------------------ */
+  const observerOptions = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
+  };
 
-/* --------------------------------------------------
-   3. Animated Statistics Counter
--------------------------------------------------- */
-function initStatsCounter() {
-  const statNumbers = document.querySelectorAll('.stat-number[data-target]');
-  if (!statNumbers.length) return;
-
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
+  const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        const target = entry.target;
-        const targetVal = parseInt(target.getAttribute('data-target'), 10);
-        const prefix = target.getAttribute('data-prefix') || '';
-        const suffix = target.getAttribute('data-suffix') || '';
-        let current = 0;
-        const increment = Math.ceil(targetVal / 50);
-
-        const timer = setInterval(() => {
-          current += increment;
-          if (current >= targetVal) {
-            target.textContent = prefix + targetVal + suffix;
-            clearInterval(timer);
-          } else {
-            target.textContent = prefix + current + suffix;
-          }
-        }, 30);
-
-        obs.unobserve(target);
+        entry.target.classList.add('is-visible');
       }
     });
-  }, { threshold: 0.5 });
+  }, observerOptions);
 
-  statNumbers.forEach(stat => observer.observe(stat));
-}
+  document.querySelectorAll('.service-card, .timeline-item, .estimator-wrapper, .contact-grid').forEach((el, idx) => {
+    el.classList.add('fade-in-element');
+    el.style.transitionDelay = `${(idx % 4) * 0.12}s`;
+    scrollObserver.observe(el);
+  });
 
-/* --------------------------------------------------
-   4. Shop Open/Closed Live Indicator
--------------------------------------------------- */
-function initShopStatus() {
-  const statusBadges = document.querySelectorAll('.status-badge');
-  if (!statusBadges.length) return;
+  /* ------------------------------------------------------------------------
+     6. Horizontal Project Timeline Controls & Scroll Track
+     ------------------------------------------------------------------------ */
+  const timelineTrackWrapper = document.querySelector('.timeline-track-wrapper');
+  const prevBtn = document.getElementById('timeline-prev');
+  const nextBtn = document.getElementById('timeline-next');
 
-  const now = new Date();
-  const day = now.getDay(); // 0 is Sunday, 1-6 Mon-Sat
-  const hour = now.getHours();
+  if (timelineTrackWrapper && prevBtn && nextBtn) {
+    prevBtn.addEventListener('click', () => {
+      timelineTrackWrapper.scrollBy({ left: -440, behavior: 'smooth' });
+    });
 
-  let isOpen = false;
-  if (day >= 1 && day <= 6) { // Mon-Sat
-    if (hour >= 9 && hour < 19) { // 9 AM to 7 PM
-      isOpen = true;
+    nextBtn.addEventListener('click', () => {
+      timelineTrackWrapper.scrollBy({ left: 440, behavior: 'smooth' });
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     7. Interactive Project Cost Estimator Calculator Engine
+     ------------------------------------------------------------------------ */
+  const estState = {
+    basePrice: 6000,
+    baseWeeks: 4,
+    complexityMultiplier: 1.2,
+    complexityLabel: 'Advanced 3D (WebGL)',
+    modulesPrice: 1200,
+    modulesWeeks: 1,
+    paceMultiplier: 1.0,
+    selectedScopeName: '3D Web Experience Core',
+    selectedModules: ['SEO & Analytics Engine']
+  };
+
+  const totalPriceEl = document.getElementById('total-price');
+  const timelineValEl = document.getElementById('est-timeline-val');
+  const breakdownListEl = document.getElementById('summary-breakdown-list');
+  const complexityBadge = document.getElementById('complexity-badge');
+  const complexityRange = document.getElementById('complexity-range');
+
+  function calculateEstimate() {
+    // Math logic
+    const total = Math.round((estState.basePrice * estState.complexityMultiplier + estState.modulesPrice) * estState.paceMultiplier);
+    const totalWeeks = Math.max(2, Math.round((estState.baseWeeks + estState.modulesWeeks) * (estState.paceMultiplier < 1 ? 1.1 : estState.paceMultiplier > 1 ? 0.75 : 1.0)));
+
+    // Animate Number Counter
+    if (totalPriceEl) {
+      const currentPrice = parseInt(totalPriceEl.textContent.replace(/,/g, ''), 10) || 0;
+      animatePrice(currentPrice, total);
+    }
+
+    if (timelineValEl) {
+      timelineValEl.textContent = `${totalWeeks} - ${totalWeeks + 1} Weeks`;
+    }
+
+    // Render Breakdown List
+    if (breakdownListEl) {
+      breakdownListEl.innerHTML = '';
+      
+      const items = [
+        estState.selectedScopeName,
+        estState.complexityLabel,
+        ...estState.selectedModules
+      ];
+
+      items.forEach(item => {
+        const li = document.createElement('li');
+        li.innerHTML = `<i data-lucide="check"></i> <span>${item}</span>`;
+        breakdownListEl.appendChild(li);
+      });
+
+      if (window.lucide) lucide.createIcons();
     }
   }
 
-  statusBadges.forEach(badge => {
-    if (isOpen) {
-      badge.innerHTML = `<span class="badge-dot"></span> Open Now (09:00 AM - 07:00 PM)`;
-    } else {
-      badge.style.background = '#fef2f2';
-      badge.style.color = '#991b1b';
-      badge.style.borderColor = '#fecaca';
-      badge.innerHTML = `<span class="badge-dot" style="background:#ef4444;box-shadow:0 0 8px #ef4444;"></span> Closed Now (Opens Mon-Sat 9AM)`;
-    }
-  });
-}
+  function animatePrice(start, end) {
+    const duration = 600;
+    const startTime = performance.now();
 
-/* --------------------------------------------------
-   5. Accordion FAQ Handler
--------------------------------------------------- */
-function initFAQAccordion() {
-  const faqItems = document.querySelectorAll('.faq-item');
-  faqItems.forEach(item => {
-    const header = item.querySelector('.faq-header');
-    header.addEventListener('click', () => {
-      const isActive = item.classList.contains('active');
-      faqItems.forEach(i => i.classList.remove('active'));
-      if (!isActive) {
-        item.classList.add('active');
+    function update(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      const val = Math.round(start + (end - start) * easeProgress);
+
+      totalPriceEl.textContent = val.toLocaleString();
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
       }
-    });
-  });
-}
-
-/* --------------------------------------------------
-   6. Contact Form & WhatsApp Submission
--------------------------------------------------- */
-function initContactForm() {
-  const form = document.getElementById('contact-form');
-  if (!form) return;
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    const name = document.getElementById('contact-name').value.trim();
-    const phone = document.getElementById('contact-phone').value.trim();
-    const service = document.getElementById('contact-service').value;
-    const message = document.getElementById('contact-message').value.trim();
-
-    if (!name || !phone || !message) {
-      showToast('Please fill out all required fields.', 'error');
-      return;
     }
+    requestAnimationFrame(update);
+  }
 
-    const encodedText = encodeURIComponent(
-      `Hello Login Computers!\n\n` +
-      `*Name:* ${name}\n` +
-      `*Phone:* ${phone}\n` +
-      `*Query Category:* ${service}\n` +
-      `*Details:* ${message}`
-    );
-
-    const waUrl = `https://wa.me/919906405769?text=${encodedText}`;
-    
-    showToast('Redirecting to WhatsApp...', 'success');
-    setTimeout(() => {
-      window.open(waUrl, '_blank');
-      form.reset();
-    }, 1200);
-  });
-}
-
-/* --------------------------------------------------
-   7. Newsletter Subscription Form
--------------------------------------------------- */
-function initNewsletterForm() {
-  const form = document.getElementById('newsletter-form');
-  if (!form) return;
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const emailInput = form.querySelector('.newsletter-input');
-    if (emailInput && emailInput.value.includes('@')) {
-      showToast('Thank you for subscribing to Login Computers updates!', 'success');
-      emailInput.value = '';
-    } else {
-      showToast('Please enter a valid email address.', 'error');
-    }
-  });
-}
-
-/* --------------------------------------------------
-   8. Portfolio Category Filter
--------------------------------------------------- */
-function initPortfolioFilter() {
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const portfolioItems = document.querySelectorAll('.portfolio-item');
-
-  if (!filterBtns.length) return;
-
-  filterBtns.forEach(btn => {
+  // Handle Option Buttons (Scope & Pace)
+  document.querySelectorAll('.est-opt-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
+      const group = btn.dataset.group;
+      document.querySelectorAll(`.est-opt-btn[data-group="${group}"]`).forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      const filterValue = btn.getAttribute('data-filter');
+      if (group === 'type') {
+        estState.basePrice = parseInt(btn.dataset.price, 10);
+        estState.baseWeeks = parseInt(btn.dataset.weeks, 10);
+        estState.selectedScopeName = btn.querySelector('span').textContent + ' Core';
+      } else if (group === 'pace') {
+        estState.paceMultiplier = parseFloat(btn.dataset.multiplier);
+      }
 
-      portfolioItems.forEach(item => {
-        const category = item.getAttribute('data-category');
-        if (filterValue === 'all' || category === filterValue) {
-          item.style.display = 'block';
-          setTimeout(() => item.style.opacity = '1', 50);
-        } else {
-          item.style.opacity = '0';
-          setTimeout(() => item.style.display = 'none', 300);
-        }
-      });
+      calculateEstimate();
     });
   });
-}
 
-/* --------------------------------------------------
-   9. Global Toast Notification System
--------------------------------------------------- */
-function showToast(message, type = 'info') {
-  let toastContainer = document.querySelector('.toast-container');
-  if (!toastContainer) {
-    toastContainer = document.createElement('div');
-    toastContainer.className = 'toast-container';
-    document.body.appendChild(toastContainer);
+  // Handle Complexity Range Slider
+  if (complexityRange) {
+    const labels = [
+      { mult: 0.85, label: 'Standard 2D UI' },
+      { mult: 1.0, label: 'Subtle Micro-UI Animations' },
+      { mult: 1.25, label: 'Advanced 3D (WebGL)' },
+      { mult: 1.6, label: 'Custom GLSL Shader Engine' }
+    ];
+
+    complexityRange.addEventListener('input', (e) => {
+      const idx = parseInt(e.target.value, 10) - 1;
+      const selected = labels[idx];
+      estState.complexityMultiplier = selected.mult;
+      estState.complexityLabel = selected.label;
+      
+      if (complexityBadge) {
+        complexityBadge.textContent = selected.label;
+      }
+
+      calculateEstimate();
+    });
   }
 
-  const toast = document.createElement('div');
-  toast.className = `toast toast-${type}`;
-  toast.innerHTML = `
-    <i data-lucide="${type === 'success' ? 'check-circle' : type === 'error' ? 'alert-circle' : 'info'}"></i>
-    <span>${message}</span>
-  `;
+  // Handle Checkboxes
+  document.querySelectorAll('.est-checkbox').forEach(chk => {
+    chk.addEventListener('change', () => {
+      let sumPrice = 0;
+      let sumWeeks = 0;
+      const selectedMods = [];
 
-  toastContainer.appendChild(toast);
-  lucide.createIcons();
+      document.querySelectorAll('.est-checkbox:checked').forEach(c => {
+        sumPrice += parseInt(c.dataset.price, 10);
+        sumWeeks += parseInt(c.dataset.weeks, 10);
+        const text = c.closest('.est-check-card').querySelector('.check-text').textContent.split(' (')[0];
+        selectedMods.push(text);
+      });
 
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateX(100%)';
-    setTimeout(() => toast.remove(), 300);
-  }, 3500);
-}
+      estState.modulesPrice = sumPrice;
+      estState.modulesWeeks = sumWeeks;
+      estState.selectedModules = selectedMods;
 
-/* --------------------------------------------------
-   10. Interactive Live Repair Status Tracker
--------------------------------------------------- */
-function initRepairTracker() {
-  const form = document.getElementById('tracker-form');
-  const input = document.getElementById('tracker-input');
-  const resultContainer = document.getElementById('tracker-result');
+      calculateEstimate();
+    });
+  });
 
-  if (!form || !input || !resultContainer) return;
+  // Initial Calculation
+  calculateEstimate();
 
-  const mockDb = {
-    'LC-9012': {
-      ticket: 'LC-9012',
-      device: 'Dell XPS 15 Laptop',
-      issue: 'NVMe SSD Upgrade & Thermal Paste Repaste',
-      step: 3, // 1 to 4
-      technician: 'Sameer Ahmad',
-      eta: 'Today, 5:30 PM',
-      notes: 'Hardware assembly finished. Running stress-testing benchmarks.'
+  /* ------------------------------------------------------------------------
+     8. Modal System for Case Studies & Proposal Request
+     ------------------------------------------------------------------------ */
+  const modalBackdrop = document.getElementById('modal-backdrop');
+  const modalContent = document.getElementById('modal-content');
+  const modalClose = document.getElementById('modal-close');
+
+  const projectDetailsMap = {
+    nebula: {
+      title: 'NEBULA-X Spatial Configurator',
+      tag: '3D & WebGL Engine',
+      desc: 'Built a full WebGL interactive hardware configurator allowing global architecture firms to customize high-end modular fittings in real time.',
+      metrics: ['+490% Conversion Surge', '60 FPS on Mobile', '3.8M Impressions'],
+      tech: ['Three.js', 'Custom Shaders', 'WebGPU', 'GLTF Pipeline']
     },
-    'LC-8841': {
-      ticket: 'LC-8841',
-      device: 'Custom Gaming Rig (RTX 4070)',
-      issue: 'BIOS Update & Cable Management',
-      step: 4,
-      technician: 'Owais Khan',
-      eta: 'Ready for Pickup',
-      notes: 'Tested 100% stable. Ready for pickup at Chadoora hub.'
+    quantum: {
+      title: 'QUANTUM PROTOCOL Analytics',
+      tag: 'FinTech Spatial Interface',
+      desc: 'Engineered a spatial data visualization platform for institutional trading desks, rendering 50,000+ real-time tick transactions per second.',
+      metrics: ['<15ms Render Latency', '$2.4B Volume Tracked', 'Zero Memory Leak'],
+      tech: ['React', 'Three.js', 'WebSockets', 'Canvas 2D/3D']
     },
-    'LC-7719': {
-      ticket: 'LC-7719',
-      device: 'HP Pavilion 14',
-      issue: 'FHD Display Replacement',
-      step: 2,
-      technician: 'Farooq Ahmad',
-      eta: 'Tomorrow, 2:00 PM',
-      notes: 'Genuine HP IPS panel received. Diagnostic check passed.'
+    synthesis: {
+      title: 'SYNTHESIS AI Generative Studio',
+      tag: 'AI + Web Canvas Studio',
+      desc: 'Created an intelligent web canvas where designers collaborate with generative AI models to craft kinetic design systems and code.',
+      metrics: ['120K+ Generated Components', '4.9/5 Rating', '85% Faster Prototyping'],
+      tech: ['Next.js', 'TypeScript', 'Web Workers', 'Gemini AI API']
+    },
+    vortex: {
+      title: 'VORTEX HYPERCAR Showroom',
+      tag: 'Photorealistic WebGL Showroom',
+      desc: 'Constructed an immersive 3D automotive showroom with real-time ray-traced reflections, metallic lacquer shaders, and interior customization.',
+      metrics: ['4K HDR Material Fidelity', '12 Min Session Length', 'Award Winning WebGL'],
+      tech: ['Three.js', 'HDR Environment Maps', 'Post-Processing Shaders']
     }
   };
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const rawVal = input.value.trim().toUpperCase();
-    if (!rawVal) {
-      showToast('Please enter your repair ticket ID', 'error');
-      return;
+  function openModal(html) {
+    if (modalContent && modalBackdrop) {
+      modalContent.innerHTML = html;
+      modalBackdrop.classList.add('active');
+      if (window.lucide) lucide.createIcons();
     }
+  }
 
-    const ticketId = rawVal.startsWith('LC-') ? rawVal : `LC-${rawVal}`;
-    let record = mockDb[ticketId];
-
-    if (!record) {
-      // Dynamic fallback for any ticket ID
-      record = {
-        ticket: ticketId,
-        device: 'Registered Laptop / Device',
-        issue: 'System Repair & Hardware Maintenance',
-        step: 2,
-        technician: 'Duty Engineer',
-        eta: 'Within 24 Hours',
-        notes: 'Device logged into system. Technicians performing initial diagnostics.'
-      };
+  function closeModal() {
+    if (modalBackdrop) {
+      modalBackdrop.classList.remove('active');
     }
+  }
 
-    renderTrackerResult(record, resultContainer);
-    showToast(`Loaded tracking status for ${record.ticket}`, 'success');
+  if (modalClose) modalClose.addEventListener('click', closeModal);
+  if (modalBackdrop) {
+    modalBackdrop.addEventListener('click', (e) => {
+      if (e.target === modalBackdrop) closeModal();
+    });
+  }
+
+  // Handle Case Study Clicks
+  document.querySelectorAll('.btn-project-detail').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.modal;
+      const data = projectDetailsMap[key];
+      if (!data) return;
+
+      const html = `
+        <div class="modal-project">
+          <div class="section-tag">[ ${data.tag} ]</div>
+          <h2 style="font-family: var(--font-heading); font-size: 2rem; color: #fff; margin-bottom: 12px;">${data.title}</h2>
+          <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 24px;">${data.desc}</p>
+          
+          <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+            ${data.metrics.map(m => `<span style="background: rgba(0, 240, 255, 0.1); color: var(--accent-electric-blue); font-family: var(--font-mono); font-size: 0.8rem; padding: 6px 14px; border-radius: var(--radius-full); border: 1px solid rgba(0, 240, 255, 0.2);">${m}</span>`).join('')}
+          </div>
+
+          <div style="margin-bottom: 30px;">
+            <div style="font-family: var(--font-heading); color: #fff; font-weight: 700; margin-bottom: 8px;">Built With:</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              ${data.tech.map(t => `<span style="background: rgba(255,255,255,0.05); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.75rem; padding: 4px 10px; border-radius: var(--radius-sm);">${t}</span>`).join('')}
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-glow btn-full" onclick="document.getElementById('modal-backdrop').classList.remove('active'); location.href='#contact';">
+            <span>Discuss Similar Project</span>
+            <i data-lucide="arrow-right"></i>
+          </button>
+        </div>
+      `;
+      openModal(html);
+    });
   });
-}
 
-function renderTrackerResult(record, container) {
-  const steps = [
-    { title: 'Received', icon: 'package-check' },
-    { title: 'Diagnostics', icon: 'stethoscope' },
-    { title: 'Repair & Test', icon: 'wrench' },
-    { title: 'Ready Pickup', icon: 'check-circle-2' }
-  ];
+  // Proposal Button Click
+  const btnProposal = document.getElementById('btn-request-proposal');
+  if (btnProposal) {
+    btnProposal.addEventListener('click', () => {
+      const price = totalPriceEl.textContent;
+      const timeline = timelineValEl.textContent;
 
-  const stepperHtml = steps.map((s, idx) => {
-    const stepNum = idx + 1;
-    let stateClass = '';
-    if (stepNum < record.step) stateClass = 'completed';
-    else if (stepNum === record.step) stateClass = 'active';
-
-    return `
-      <div class="stepper-step ${stateClass}">
-        <div class="stepper-icon">
-          <i data-lucide="${s.icon}"></i>
+      const html = `
+        <div class="modal-proposal text-center">
+          <div class="section-tag">[ DISCOVERY CALL ]</div>
+          <h2 style="font-family: var(--font-heading); font-size: 2rem; color: #fff; margin-bottom: 12px;">Reserve Your Project Spot</h2>
+          <p style="color: var(--text-muted); margin-bottom: 20px;">Your calculated scope estimate: <strong style="color: var(--accent-electric-blue);">$${price} USD</strong> (${timeline})</p>
+          
+          <p style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 24px;">Our lead 3D architect will review your configuration and prepare a custom technical roadmap.</p>
+          
+          <button class="btn btn-primary btn-glow btn-full" onclick="document.getElementById('modal-backdrop').classList.remove('active'); location.href='#contact';">
+            <span>Proceed to Contact Form</span>
+            <i data-lucide="send"></i>
+          </button>
         </div>
-        <div class="stepper-title">${s.title}</div>
-      </div>
-    `;
-  }).join('');
+      `;
+      openModal(html);
+    });
+  }
 
-  const waMsg = encodeURIComponent(`Hi Login Computers! Checking live status for my Repair Ticket ID: ${record.ticket} (${record.device}).`);
+  /* ------------------------------------------------------------------------
+     9. Form Submission Handler
+     ------------------------------------------------------------------------ */
+  window.handleFormSubmit = function() {
+    const statusEl = document.getElementById('form-status');
+    const btnSubmit = document.getElementById('btn-form-submit');
+    const name = document.getElementById('form-name').value;
 
-  container.innerHTML = `
-    <div class="tracker-result-card">
-      <div class="tracker-ticket-header">
-        <div>
-          <span class="ticket-number-badge">${record.ticket}</span>
-          <div class="ticket-device-type">${record.device} — ${record.issue}</div>
-        </div>
-        <a href="https://wa.me/919906405769?text=${waMsg}" target="_blank" class="btn btn-whatsapp" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
-          <i data-lucide="message-square"></i> WhatsApp Status Query
-        </a>
-      </div>
+    if (btnSubmit) {
+      btnSubmit.disabled = true;
+      btnSubmit.querySelector('span').textContent = 'Transmitting...';
+    }
 
-      <div class="tracker-stepper">
-        ${stepperHtml}
-      </div>
-
-      <div class="tracker-meta-grid">
-        <div class="tracker-meta-item">
-          <span>Assigned Technician</span>
-          <strong>${record.technician}</strong>
-        </div>
-        <div class="tracker-meta-item">
-          <span>Estimated Completion</span>
-          <strong>${record.eta}</strong>
-        </div>
-        <div class="tracker-meta-item" style="grid-column: span 2;">
-          <span>Latest Technician Note</span>
-          <strong>${record.notes}</strong>
-        </div>
-      </div>
-    </div>
-  `;
-
-  lucide.createIcons();
-}
-
+    setTimeout(() => {
+      if (statusEl) {
+        statusEl.style.color = 'var(--accent-electric-blue)';
+        statusEl.textContent = `Thank you, ${name}! Your inquiry has been received. Our team will respond within 6 hours.`;
+      }
+      if (btnSubmit) {
+        btnSubmit.disabled = false;
+        btnSubmit.querySelector('span').textContent = 'Message Transmitted ✓';
+      }
+      document.getElementById('contact-form').reset();
+    }, 1200);
+  };
+});
